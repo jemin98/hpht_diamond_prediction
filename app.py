@@ -6,6 +6,7 @@ Uses proper diamond color grades (D-Z), clarity grades (FL-I3), cut quality (Exc
 """
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, field_validator
 import joblib
 import sqlite3
@@ -23,6 +24,15 @@ app = FastAPI(
     title="HPHT Diamond Treatment Prediction API",
     description="Predicts ideal temperature and pressure for HPHT diamond treatment based on diamond characteristics",
     version="1.0.0"
+)
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
 )
 
 # Pydantic model for input validation
